@@ -4,6 +4,7 @@ from dash import Input, Output, callback, dash_table,State
 import pandas as pd
 import requests
 import json
+import time
 from app_secrets import *
 import dash
 import dash_core_components as dcc
@@ -71,6 +72,7 @@ app.layout = html.Div([
     Input('bar_y_var', 'value'),
     )
 def update_bar_graph(bar_x_var,bar_y_var):
+    start_time = time.time()
     global headers
     data={
         'selected_fields':[bar_x_var,bar_y_var],
@@ -87,6 +89,7 @@ def update_bar_graph(bar_x_var,bar_y_var):
         'plot_bgcolor': 'rgba(0,0,0,0)',
         'paper_bgcolor': 'rgba(0,0,0,0)'
     })
+    print(time.time() - start_time)
     return fig
 
 if __name__ == "__main__":
