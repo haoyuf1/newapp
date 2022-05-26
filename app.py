@@ -1,4 +1,5 @@
 import plotly.express as px
+from dash import Dash
 from dash import Input, Output, callback, dash_table,State
 import pandas as pd
 import requests
@@ -6,6 +7,7 @@ import json
 from app_secrets import *
 import dash
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 
 bar_x_vars=[
@@ -44,7 +46,9 @@ bar_y_abs_vars=[
     'voyage_slaves_numbers__imp_jamaican_cash_price'
     ]
 
-app = dash.Dash()
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True)
+server = app.server
+
 app.layout = html.Div([
     dcc.Graph(id='fizz'),
     dcc.Dropdown(
@@ -85,4 +89,5 @@ def update_bar_graph(bar_x_var,bar_y_var):
     })
     return fig
 
-app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
+if __name__ == "__main__":
+    app.run_server(debug=True)  # Turn off reloader if inside Jupyter
